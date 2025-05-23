@@ -1,0 +1,46 @@
+<div *ngIf="currentUser">
+    <h3>Welcome, {{ currentUser.username }}!</h3>
+    <p>Email: {{ currentUser.useremail }}</p>
+  </div>
+  <h2>Add New Contact</h2>
+<form (ngSubmit)="addContact()" #contactForm="ngForm">
+
+  <input
+    type="text"
+    name="name"
+    [(ngModel)]="newContact.name"
+    placeholder="Name"
+    required
+  />
+
+  <input
+    type="email"
+    name="email"
+    [(ngModel)]="newContact.email"
+    placeholder="Email"
+    required
+  />
+
+  <input
+    type="text"
+    name="phone"
+    [(ngModel)]="newContact.phone"
+    placeholder="Phone"
+    required
+  />
+
+  <button type="submit" [disabled]="contactForm.invalid">Add Contact</button>
+
+</form>
+
+<hr />
+
+<h2>Your Contacts</h2>
+<ul>
+  <li *ngFor="let contact of contacts">
+    {{ contact.name }} - {{ contact.email }} - {{ contact.phone }}
+  </li>
+</ul>
+
+<button *ngIf="authService.isAuthenticated()" (click)="logout()">Logout</button>
+
