@@ -15,10 +15,7 @@
             placeholder="Name"
             required
             class="form-control"
-            #nameInput="ngModel"
-            [class.is-invalid]="nameInput.invalid && nameInput.touched"
           />
-          <div class="invalid-feedback">Name is required.</div>
         </div>
   
         <div class="mb-3">
@@ -29,10 +26,7 @@
             placeholder="Email"
             required
             class="form-control"
-            #emailInput="ngModel"
-            [class.is-invalid]="emailInput.invalid && emailInput.touched"
           />
-          <div class="invalid-feedback">Valid email is required.</div>
         </div>
   
         <div class="mb-3">
@@ -43,10 +37,7 @@
             placeholder="Phone"
             required
             class="form-control"
-            #phoneInput="ngModel"
-            [class.is-invalid]="phoneInput.invalid && phoneInput.touched"
           />
-          <div class="invalid-feedback">Phone is required.</div>
         </div>
   
         <button type="submit" class="btn btn-primary w-100" [disabled]="contactForm.invalid">
@@ -57,29 +48,33 @@
       <hr />
   
       <h4>Your Contacts</h4>
-      <ul class="list-group mb-4">
-        <li
-          *ngFor="let contact of contacts"
-          class="list-group-item d-flex justify-content-between align-items-center"
-        >
-          <div>
-            <strong>{{ contact.name }}</strong> — {{ contact.email }} — {{ contact.phone }}
-          </div>
-          <div>
-            <button
-              class="btn btn-sm btn-outline-secondary me-2"
-              (click)="selectContactForEdit(contact)"
-            >
-              Edit
-            </button>
-            <button class="btn btn-sm btn-outline-danger" (click)="deleteContact(contact.id)">
-              Delete
-            </button>
-          </div>
-        </li>
-      </ul>
+      <div *ngIf="contacts.length === 0" class="text-muted">
+        No contacts added yet.
+      </div>
   
-      <div *ngIf="editingContact" class="card p-3 bg-light rounded">
+      <div class="row gy-3">
+        <div class="col-12" *ngFor="let contact of contacts">
+          <div class="card contact-card shadow-sm p-3 rounded">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <h5 class="mb-1">{{ contact.name }}</h5>
+                <p class="mb-1"><strong>Phone:</strong> {{ contact.phone }}</p>
+                <p class="mb-0"><strong>Email:</strong> {{ contact.email }}</p>
+              </div>
+              <div class="btn-group btn-group-sm">
+                <button class="btn btn-outline-secondary" (click)="selectContactForEdit(contact)">
+                  Edit
+                </button>
+                <button class="btn btn-outline-danger" (click)="deleteContact(contact.id)">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div *ngIf="editingContact" class="card mt-4 p-3 bg-light rounded shadow-sm">
         <h5>Edit Contact</h5>
         <form (ngSubmit)="updateContact()" #editForm="ngForm">
           <div class="mb-3">
