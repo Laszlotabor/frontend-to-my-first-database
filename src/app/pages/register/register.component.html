@@ -1,50 +1,75 @@
-<h2>Register</h2>
+<!-- Register Form -->
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+  <div class="card shadow p-4" style="min-width: 350px; max-width: 400px; width: 100%;">
+    <h2 class="text-center mb-4">Register</h2>
+    <form (ngSubmit)="onSubmit()" #registerForm="ngForm" novalidate>
 
-<form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+      <!-- Username -->
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          class="form-control"
+          required
+          [(ngModel)]="username"
+          #usernameInput="ngModel"
+          [class.is-invalid]="usernameInput.invalid && usernameInput.touched"
+        />
+        <div class="invalid-feedback">
+          Username is required.
+        </div>
+      </div>
 
-  <label for="username">Username:</label>
-  <input
-    type="text"
-    id="username"
-    name="username"
-    required
-    [(ngModel)]="username"
-    #usernameInput="ngModel"
-  />
-  <div *ngIf="usernameInput.invalid && usernameInput.touched" style="color:red">
-    Username is required
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="useremail" class="form-label">Email address</label>
+        <input
+          type="email"
+          id="useremail"
+          name="useremail"
+          class="form-control"
+          required
+          [(ngModel)]="useremail"
+          #useremailInput="ngModel"
+          [class.is-invalid]="useremailInput.invalid && useremailInput.touched"
+        />
+        <div class="invalid-feedback">
+          Valid email is required.
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="form-control"
+          required
+          minlength="6"
+          [(ngModel)]="password"
+          #passwordInput="ngModel"
+          [class.is-invalid]="passwordInput.invalid && passwordInput.touched"
+        />
+        <div class="invalid-feedback">
+          Password is required (minimum 6 characters).
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-success w-100"
+        [disabled]="registerForm.invalid"
+      >
+        Register
+      </button>
+    </form>
+
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3" role="alert">
+      {{ errorMessage }}
+    </div>
   </div>
-
-  <label for="useremail">Email:</label>
-  <input
-    type="email"
-    id="useremail"
-    name="useremail"
-    required
-    [(ngModel)]="useremail"
-    #useremailInput="ngModel"
-  />
-  <div *ngIf="useremailInput.invalid && useremailInput.touched" style="color:red">
-    Email is required
-  </div>
-
-  <label for="password">Password:</label>
-  <input
-    type="password"
-    id="password"
-    name="password"
-    required
-    minlength="6"
-    [(ngModel)]="password"
-    #passwordInput="ngModel"
-  />
-  <div *ngIf="passwordInput.invalid && passwordInput.touched" style="color:red">
-    Password is required (min 6 chars)
-  </div>
-
-  <button type="submit" [disabled]="registerForm.invalid">Register</button>
-</form>
-
-<div *ngIf="errorMessage" style="color:red; margin-top: 1rem;">
-  {{ errorMessage }}
 </div>

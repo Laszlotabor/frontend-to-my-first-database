@@ -30,6 +30,7 @@ export class RegisterComponent {
       })
       .subscribe({
         next: (res) => {
+          console.log('Registration successful:', res); // ✅ log this
           // On successful registration, navigate to login
           this.router.navigate(['/login']);
         },
