@@ -2,45 +2,38 @@
     <h3>Welcome, {{ currentUser.username }}!</h3>
     <p>Email: {{ currentUser.useremail }}</p>
   </div>
+  
   <h2>Add New Contact</h2>
-<form (ngSubmit)="addContact()" #contactForm="ngForm">
-
-  <input
-    type="text"
-    name="name"
-    [(ngModel)]="newContact.name"
-    placeholder="Name"
-    required
-  />
-
-  <input
-    type="email"
-    name="email"
-    [(ngModel)]="newContact.email"
-    placeholder="Email"
-    required
-  />
-
-  <input
-    type="text"
-    name="phone"
-    [(ngModel)]="newContact.phone"
-    placeholder="Phone"
-    required
-  />
-
-  <button type="submit" [disabled]="contactForm.invalid">Add Contact</button>
-
-</form>
-
-<hr />
-
-<h2>Your Contacts</h2>
-<ul>
-  <li *ngFor="let contact of contacts">
-    {{ contact.name }} - {{ contact.email }} - {{ contact.phone }}
-  </li>
-</ul>
-
-<button *ngIf="authService.isAuthenticated()" (click)="logout()">Logout</button>
-
+  <form (ngSubmit)="addContact()" #contactForm="ngForm">
+    <input type="text" name="name" [(ngModel)]="newContact.name" placeholder="Name" required />
+    <input type="email" name="email" [(ngModel)]="newContact.email" placeholder="Email" required />
+    <input type="text" name="phone" [(ngModel)]="newContact.phone" placeholder="Phone" required />
+    <button type="submit" [disabled]="contactForm.invalid">Add Contact</button>
+  </form>
+  
+  <hr />
+  
+  <h2>Your Contacts</h2>
+  <ul>
+    <li *ngFor="let contact of contacts">
+      {{ contact.name }} - {{ contact.email }} - {{ contact.phone }}
+      <button (click)="selectContactForEdit(contact)">Edit</button>
+      <button (click)="deleteContact(contact.id)">Delete</button>
+    </li>
+  </ul>
+  
+  <!-- Edit Contact Section -->
+  <div *ngIf="editingContact">
+    <h3>Edit Contact</h3>
+    <form (ngSubmit)="updateContact()" #editForm="ngForm">
+      <input type="text" [(ngModel)]="editingContact.name" name="editName" required />
+      <input type="email" [(ngModel)]="editingContact.email" name="editEmail" required />
+      <input type="text" [(ngModel)]="editingContact.phone" name="editPhone" required />
+      <button type="submit">Save</button>
+      <button type="button" (click)="cancelEditing()">Cancel</button>
+    </form>
+  </div>
+  
+  
+  <button *ngIf="authService.isAuthenticated()" (click)="logout()">Logout</button>
+  

@@ -1,38 +1,48 @@
-<h2>Login</h2>
+<!-- Toggle Button -->
+<button (click)="showLogin = !showLogin" style="margin-bottom: 1rem;">
+  {{ showLogin ? 'Need an account? Register here' : 'Already have an account? Login here' }}
+</button>
 
-<form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+<!-- Login Form -->
+<div *ngIf="showLogin">
+  <h2>Login</h2>
+  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <label for="useremail">Email:</label>
+    <input
+      type="email"
+      id="useremail"
+      name="useremail"
+      required
+      [(ngModel)]="useremail"
+      #useremailInput="ngModel"
+    />
+    <div *ngIf="useremailInput.invalid && useremailInput.touched" style="color:red">
+      Email is required
+    </div>
 
-  <label for="useremail">Email:</label>
-  <input
-    type="email"
-    id="useremail"
-    name="useremail"
-    required
-    [(ngModel)]="useremail"
-    #useremailInput="ngModel"
-  />
-  <div *ngIf="useremailInput.invalid && useremailInput.touched" style="color:red">
-    Email is required
+    <label for="password">Password:</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      required
+      minlength="6"
+      [(ngModel)]="password"
+      #passwordInput="ngModel"
+    />
+    <div *ngIf="passwordInput.invalid && passwordInput.touched" style="color:red">
+      Password is required (min 6 chars)
+    </div>
+
+    <button type="submit" [disabled]="loginForm.invalid">Login</button>
+  </form>
+
+  <div *ngIf="errorMessage" style="color:red; margin-top: 1rem;">
+    {{ errorMessage }}
   </div>
+</div>
 
-  <label for="password">Password:</label>
-  <input
-    type="password"
-    id="password"
-    name="password"
-    required
-    minlength="6"
-    [(ngModel)]="password"
-    #passwordInput="ngModel"
-  />
-  <div *ngIf="passwordInput.invalid && passwordInput.touched" style="color:red">
-    Password is required (min 6 chars)
-  </div>
-
-  <button type="submit" [disabled]="loginForm.invalid">Login</button>
-
-</form>
-
-<div *ngIf="errorMessage" style="color:red; margin-top: 1rem;">
-  {{ errorMessage }}
+<!-- Register Form -->
+<div *ngIf="!showLogin">
+  <app-register></app-register>
 </div>

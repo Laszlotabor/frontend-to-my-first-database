@@ -3,12 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-
+import { RegisterComponent } from '../register/register.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule, RegisterComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
@@ -16,6 +16,7 @@ export class LoginComponent {
   useremail = '';
   password = '';
   errorMessage = '';
+  showLogin = true; // Toggle between login and register
 
   constructor(private authService: AuthService, private router: Router) {}
 
